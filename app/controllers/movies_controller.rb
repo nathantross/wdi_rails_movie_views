@@ -17,7 +17,7 @@ class MoviesController < ApplicationController
   end
   # route: # GET    /movies/:id(.:format)
   def show
-    @movie = get_movie(params[:id])
+    #@movie = get_movie(params[:id])
   end
 
   # route: GET    /movies/new(.:format)
