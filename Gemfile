@@ -6,7 +6,11 @@ gem 'rails', '4.0.2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 
+# Use for testing
 gem 'pry', :group => :development
+
+# Run HTTP requests in parallel while cleanly encapsulating handling logic
+gem 'typhoeus'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

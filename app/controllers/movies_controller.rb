@@ -17,13 +17,7 @@ class MoviesController < ApplicationController
   end
   # route: # GET    /movies/:id(.:format)
   def show
-    @movie = @@movie_db.find do |m|
-      m["imdbID"] == params[:id]
-    end
-    if @movie.nil?
-      flash.now[:message] = "Movie not found" if @movie.nil?
-      @movie = {}
-    end
+    @movie = get_movie(params[:id])
   end
 
   # route: GET    /movies/new(.:format)
@@ -32,17 +26,10 @@ class MoviesController < ApplicationController
 
   # route: GET    /movies/:id/edit(.:format)
   def edit
-    @movie = @@movie_db.find do |m|
-      m["imdbID"] == params[:id]
-    end
-
-    if @movie.nil?
-      flash.now[:message] = "Movie not found" if @movie.nil?
-      @movie = {}
-    end
+    @movie = get_movie(params[:id])
   end
 
-  #route: # POST   /movies(.:format)
+  #route: # POST  /movies(.:format)
   def create
     # create new movie object from params
     movie = params.require(:movie).permit(:title, :year)
@@ -67,6 +54,7 @@ class MoviesController < ApplicationController
 
     @@movie_db << movie
     redirect_to action: :index
+    # go to index or show
   end
 
   # route: DELETE /movies/:id(.:format)
@@ -75,6 +63,22 @@ class MoviesController < ApplicationController
       m["imdbID"] == params[:id]
     end
     redirect_to action: :index
+    # redirect_to index
+    # redirect tells browser in a response to go to new location
+    # render generates a response of the new location
+  end
+
+  private  # all methods below this line are private to this class
+
+  def get_movie(movie_id)
+    the_movie = @@movie_db.find do |m|
+      m["imdbID"] == movie_id
+    end
+
+    if the_movie.nil?
+      flash.now[:message] = "Movie not found"
+      the_movie = {}
+    end
   end
 
 end
